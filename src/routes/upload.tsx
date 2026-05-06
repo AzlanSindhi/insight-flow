@@ -24,7 +24,7 @@ function UploadPage() {
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             className="text-center mb-10"
           >
             <h1 className="font-heading text-4xl sm:text-5xl mb-3">Upload Workspace</h1>
@@ -35,7 +35,7 @@ function UploadPage() {
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
             <FileUploadZone />
@@ -44,7 +44,7 @@ function UploadPage() {
           {/* Processing Steps */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4"
           >
@@ -68,7 +68,7 @@ function UploadPage() {
           {/* Sample Analysis Preview */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
             className="mt-12"
           >

@@ -41,8 +41,7 @@ function LandingPage() {
         <div className="max-w-7xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="font-heading text-5xl sm:text-7xl lg:text-8xl tracking-tight leading-[0.95]"
           >
@@ -50,8 +49,7 @@ function LandingPage() {
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-6 text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed"
           >
@@ -59,8 +57,7 @@ function LandingPage() {
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-8 flex flex-col sm:flex-row gap-3 justify-center"
           >
@@ -80,8 +77,7 @@ function LandingPage() {
         {/* Hero Image */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
           className="max-w-5xl mx-auto mt-16 relative"
         >
@@ -101,8 +97,7 @@ function LandingPage() {
         {/* Trust Bar */}
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
           className="max-w-4xl mx-auto mt-12 flex flex-wrap justify-center gap-8 text-xs text-muted-foreground"
         >

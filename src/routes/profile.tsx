@@ -20,7 +20,7 @@ function ProfilePage() {
       <Header />
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex items-center gap-6 mb-10">
               <div className="relative">
                 <div className="w-20 h-20 rounded-2xl bg-sage/20 flex items-center justify-center">

@@ -41,7 +41,7 @@ export function TrendChart() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       className="bg-card rounded-2xl p-6 border border-border/50"
     >
@@ -71,7 +71,7 @@ export function CorrelationScatter() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 }}
       className="bg-card rounded-2xl p-6 border border-border/50"
     >
@@ -94,7 +94,7 @@ export function ColumnTypeDistribution() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
       className="bg-card rounded-2xl p-6 border border-border/50"
     >
@@ -134,7 +134,7 @@ export function FeatureImportanceChart() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.3 }}
       className="bg-card rounded-2xl p-6 border border-border/50"
     >
@@ -162,7 +162,7 @@ export function RegressionChart() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.15 }}
       className="bg-card rounded-2xl p-6 border border-border/50"
     >

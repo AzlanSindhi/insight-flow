@@ -22,7 +22,7 @@ export function DatasetSummary() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       className="bg-card rounded-2xl p-6 border border-border/50"
     >
       <div className="flex items-center justify-between mb-6">
@@ -66,7 +66,7 @@ export function DatasetSummary() {
           <motion.div
             key={col.name}
             initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.05 }}
             className="grid grid-cols-4 text-sm px-3 py-2.5 rounded-lg hover:bg-accent/30 transition-colors"
           >

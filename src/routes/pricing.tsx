@@ -52,7 +52,7 @@ function PricingPage() {
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             className="text-center mb-14"
           >
             <h1 className="font-heading text-5xl sm:text-6xl mb-4">Simple pricing</h1>
@@ -66,7 +66,7 @@ function PricingPage() {
               <motion.div
                 key={plan.name}
                 initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.15 }}
                 className={`bg-card rounded-2xl p-8 border flex flex-col ${
                   plan.popular ? "border-primary shadow-lg scale-[1.02]" : "border-border/50"

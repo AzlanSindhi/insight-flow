@@ -14,7 +14,7 @@ export function KPICard({ title, value, change, changeType = "neutral", icon, de
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
       className="bg-card rounded-2xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-shadow"
     >

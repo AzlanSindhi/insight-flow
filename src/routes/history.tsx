@@ -29,7 +29,7 @@ function HistoryPage() {
       <div className="pt-20 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <h1 className="font-heading text-3xl">Dataset History</h1>
               <p className="text-sm text-muted-foreground mt-1">{datasets.length} datasets analyzed</p>
             </motion.div>
@@ -60,7 +60,7 @@ function HistoryPage() {
               <motion.div
                 key={ds.name}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                whileInView={{ opacity: 1 }} viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
               >
                 <Link

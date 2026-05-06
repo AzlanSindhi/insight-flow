@@ -101,7 +101,8 @@ function LandingPage() {
         {/* Trust Bar */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ delay: 1.2 }}
           className="max-w-4xl mx-auto mt-12 flex flex-wrap justify-center gap-8 text-xs text-muted-foreground"
         >

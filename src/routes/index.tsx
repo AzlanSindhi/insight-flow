@@ -80,7 +80,8 @@ function LandingPage() {
         {/* Hero Image */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.5 }}
           className="max-w-5xl mx-auto mt-16 relative"
         >

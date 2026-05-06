@@ -104,7 +104,7 @@ function DashboardPage() {
           {/* Recent Datasets */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             transition={{ delay: 0.4 }}
             className="bg-card rounded-2xl border border-border/50 overflow-hidden"
           >
@@ -117,7 +117,7 @@ function DashboardPage() {
                 <motion.div
                   key={ds.name}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  whileInView={{ opacity: 1 }} viewport={{ once: true }}
                   transition={{ delay: 0.5 + i * 0.05 }}
                   className="px-6 py-4 flex items-center justify-between hover:bg-accent/20 transition-colors"
                 >

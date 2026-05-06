@@ -68,7 +68,7 @@ export function Header() {
       {mobileOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="md:hidden bg-background border-b border-border px-4 pb-4"
         >
           {navLinks.map((link) => (

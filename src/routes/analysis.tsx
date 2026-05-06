@@ -24,7 +24,7 @@ function AnalysisPage() {
       <div className="pt-20 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <h1 className="font-heading text-3xl">Analysis Results</h1>
               <p className="text-sm text-muted-foreground mt-1">sales_data_2024.csv — Completed 2 hours ago</p>
             </motion.div>
@@ -41,7 +41,7 @@ function AnalysisPage() {
           {/* AI Summary */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="bg-card rounded-2xl p-6 border border-border/50 mb-6"
           >
@@ -74,7 +74,7 @@ function AnalysisPage() {
           {/* Confidence Scores */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             transition={{ delay: 0.5 }}
             className="bg-card rounded-2xl p-6 border border-border/50 mt-6"
           >

@@ -21,7 +21,7 @@ function LoginPage() {
       <div className="flex-1 flex items-center justify-center px-4 pt-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="w-full max-w-sm"
         >
           <h1 className="font-heading text-3xl text-center mb-2">Welcome back</h1>

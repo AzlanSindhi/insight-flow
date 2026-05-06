@@ -41,9 +41,6 @@ export const Route = createRootRoute({
       {
         rel: "stylesheet",
         href: appCss,
-      {
-        rel: "stylesheet",
-        href: appCss,
       },
       {
         rel: "preconnect",

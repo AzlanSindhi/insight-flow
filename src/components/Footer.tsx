@@ -6,7 +6,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div>
-            <h3 className="font-heading text-2xl mb-4">Aura</h3>
+            <h3 className="font-heading text-2xl mb-4">DataSage</h3>
             <p className="text-sm opacity-70 leading-relaxed">
               AI-powered analytics that transforms your raw data into actionable insights.
             </p>
@@ -36,7 +36,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-background/10 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs opacity-50">© 2026 Aura Analytics. All rights reserved.</p>
+          <p className="text-xs opacity-50">© 2026 DataSage. All rights reserved.</p>
           <div className="flex gap-4">
             <a href="#" className="text-xs opacity-50 hover:opacity-100">Twitter</a>
             <a href="#" className="text-xs opacity-50 hover:opacity-100">LinkedIn</a>

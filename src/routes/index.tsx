@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "Aura — AI-Powered Data Analytics" },
+      { title: "DataSage — AI-Powered Data Analytics" },
       { name: "description", content: "Transform raw data into actionable insights with AI-powered analytics. Upload, analyze, and visualize your data effortlessly." },
     ],
   }),
@@ -217,7 +217,7 @@ function LandingPage() {
           >
             <div className="grid grid-cols-4 text-sm">
               <div className="p-4 font-medium text-left border-b border-border/50">Feature</div>
-              <div className="p-4 font-medium border-b border-border/50">Aura</div>
+              <div className="p-4 font-medium border-b border-border/50">DataSage</div>
               <div className="p-4 font-medium border-b border-border/50 text-muted-foreground">Competitor A</div>
               <div className="p-4 font-medium border-b border-border/50 text-muted-foreground">Competitor B</div>
               {[

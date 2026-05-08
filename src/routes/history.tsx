@@ -7,7 +7,7 @@ export const Route = createFileRoute("/history")({
   component: HistoryPage,
   head: () => ({
     meta: [
-      { title: "Dataset History — Aura Analytics" },
+      { title: "Dataset History — DataSage" },
       { name: "description", content: "Browse and manage your analyzed datasets." },
     ],
   }),

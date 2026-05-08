@@ -8,8 +8,8 @@ export const Route = createFileRoute("/profile")({
   component: ProfilePage,
   head: () => ({
     meta: [
-      { title: "Profile — Aura Analytics" },
-      { name: "description", content: "Manage your Aura Analytics profile." },
+      { title: "Profile — DataSage" },
+      { name: "description", content: "Manage your DataSage profile." },
     ],
   }),
 });

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
   head: () => ({
     meta: [
-      { title: "Dashboard — Aura Analytics" },
+      { title: "Dashboard — DataSage" },
       { name: "description", content: "Your AI-powered analytics dashboard with real-time insights." },
     ],
   }),

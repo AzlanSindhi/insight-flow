@@ -10,7 +10,7 @@ export const Route = createFileRoute("/upload")({
   component: UploadPage,
   head: () => ({
     meta: [
-      { title: "Upload — Aura Analytics" },
+      { title: "Upload — DataSage" },
       { name: "description", content: "Upload your data files for AI-powered analysis." },
     ],
   }),

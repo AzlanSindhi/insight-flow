@@ -1,4 +1,8 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/hooks/useAuth";
 
 import appCss from "../styles.css?url";
 
@@ -29,23 +33,17 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Aura — AI-Powered Data Analytics" },
+      { title: "DataSage — AI-Powered Data Analytics" },
       { name: "description", content: "Transform raw data into actionable insights with AI-powered analytics." },
-      { name: "author", content: "Aura" },
-      { property: "og:title", content: "Aura — AI-Powered Data Analytics" },
+      { name: "author", content: "DataSage" },
+      { property: "og:title", content: "DataSage — AI-Powered Data Analytics" },
       { property: "og:description", content: "Transform raw data into actionable insights with AI-powered analytics." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap",
@@ -72,5 +70,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  return <Outlet />;
+  const [qc] = useState(() => new QueryClient());
+  return (
+    <QueryClientProvider client={qc}>
+      <AuthProvider>
+        <Outlet />
+        <Toaster />
+      </AuthProvider>
+    </QueryClientProvider>
+  );
 }

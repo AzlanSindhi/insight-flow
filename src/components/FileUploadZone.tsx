@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload, FileText, Table, Code, FileJson, CheckCircle } from "lucide-react";
+import { Upload, FileText, Table, Code, FileJson, CheckCircle, Loader2 } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { parseFile } from "@/lib/parseFile";
+import { toast } from "sonner";
 
 const fileTypes = [
   { ext: "CSV", icon: <Table className="w-4 h-4" /> },
@@ -12,18 +17,53 @@ const fileTypes = [
 
 export function FileUploadZone() {
   const [uploaded, setUploaded] = useState(false);
+  const [busy, setBusy] = useState(false);
   const [fileName, setFileName] = useState("");
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    if (acceptedFiles.length > 0) {
-      setFileName(acceptedFiles[0].name);
-      setUploaded(true);
-      setTimeout(() => setUploaded(false), 3000);
-    }
-  }, []);
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      if (!acceptedFiles.length) return;
+      if (!user) {
+        toast.error("Please log in to upload datasets.");
+        navigate({ to: "/login" });
+        return;
+      }
+      const file = acceptedFiles[0];
+      setFileName(file.name);
+      setBusy(true);
+      try {
+        const parsed = await parseFile(file);
+        const { error } = await supabase.from("datasets").insert({
+          user_id: user.id,
+          file_name: file.name,
+          file_size: file.size,
+          file_type: parsed.fileType,
+          row_count: parsed.rowCount,
+          column_count: parsed.columnCount,
+          health_score: parsed.healthScore,
+          status: "Analyzed",
+          summary: parsed.summary,
+        });
+        if (error) throw error;
+        setUploaded(true);
+        toast.success(`${file.name} analyzed successfully`);
+        setTimeout(() => {
+          navigate({ to: "/analysis" });
+        }, 900);
+      } catch (e: any) {
+        toast.error(e.message || "Upload failed");
+      } finally {
+        setBusy(false);
+      }
+    },
+    [user, navigate],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
+    disabled: busy,
     accept: {
       "text/csv": [".csv"],
       "application/json": [".json"],
@@ -45,20 +85,21 @@ export function FileUploadZone() {
             : uploaded
             ? "border-sage bg-sage/5"
             : "border-border hover:border-primary/50 hover:bg-accent/30"
-        }`}
+        } ${busy ? "opacity-70 cursor-wait" : ""}`}
       >
         <input {...getInputProps()} />
-        <motion.div
-          animate={{ y: isDragActive ? -5 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="flex flex-col items-center gap-4"
-        >
-          {uploaded ? (
+        <motion.div animate={{ y: isDragActive ? -5 : 0 }} className="flex flex-col items-center gap-4">
+          {busy ? (
+            <>
+              <Loader2 className="w-12 h-12 text-primary animate-spin" />
+              <p className="text-lg font-medium">Analyzing {fileName}…</p>
+            </>
+          ) : uploaded ? (
             <>
               <CheckCircle className="w-12 h-12 text-sage" />
               <div>
-                <p className="text-lg font-medium text-foreground">{fileName} uploaded!</p>
-                <p className="text-sm text-muted-foreground mt-1">Processing your data...</p>
+                <p className="text-lg font-medium">{fileName} uploaded!</p>
+                <p className="text-sm text-muted-foreground mt-1">Opening analysis…</p>
               </div>
             </>
           ) : (
@@ -70,9 +111,7 @@ export function FileUploadZone() {
                 <p className="text-lg font-medium text-foreground">
                   {isDragActive ? "Drop your file here" : "Drag & drop your data file"}
                 </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  or click to browse from your computer
-                </p>
+                <p className="text-sm text-muted-foreground mt-1">or click to browse from your computer</p>
               </div>
             </>
           )}
@@ -81,10 +120,7 @@ export function FileUploadZone() {
 
       <div className="flex flex-wrap justify-center gap-2">
         {fileTypes.map((type) => (
-          <div
-            key={type.ext}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/50 text-xs text-muted-foreground"
-          >
+          <div key={type.ext} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/50 text-xs text-muted-foreground">
             {type.icon}
             {type.ext}
           </div>

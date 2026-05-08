@@ -11,7 +11,7 @@ export const Route = createFileRoute("/analysis")({
   component: AnalysisPage,
   head: () => ({
     meta: [
-      { title: "Analysis Results — Aura Analytics" },
+      { title: "Analysis Results — DataSage" },
       { name: "description", content: "View AI-generated analysis results for your dataset." },
     ],
   }),

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/pricing")({
   component: PricingPage,
   head: () => ({
     meta: [
-      { title: "Pricing — Aura Analytics" },
+      { title: "Pricing — DataSage" },
       { name: "description", content: "Simple, transparent pricing for AI-powered data analytics." },
     ],
   }),

@@ -40,7 +40,7 @@ function SettingsPage() {
       if (data) {
         setTheme(data.theme || "Light");
         setLanguage(data.language || "English (US)");
-        setNotifs((data.notifications as Notifs) || notifs);
+        setNotifs((data.notifications as unknown as Notifs) || notifs);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,7 +53,7 @@ function SettingsPage() {
       user_id: user.id,
       theme: next.theme ?? theme,
       language: next.language ?? language,
-      notifications: next.notifications ?? notifs,
+      notifications: (next.notifications ?? notifs) as unknown as Record<string, boolean>,
       updated_at: new Date().toISOString(),
     };
     const { error } = await supabase.from("user_settings").upsert(payload);

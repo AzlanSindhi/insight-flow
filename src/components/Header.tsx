@@ -1,24 +1,39 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun, LogOut, User as UserIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dark, setDark] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const toggleDark = () => {
     setDark(!dark);
     document.documentElement.classList.toggle("dark");
   };
 
-  const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/dashboard", label: "Dashboard" },
-    { to: "/upload", label: "Upload" },
-    { to: "/pricing", label: "Pricing" },
-  ];
+  const handleLogout = async () => {
+    await signOut();
+    toast.success("Signed out");
+    navigate({ to: "/" });
+  };
+
+  const navLinks = user
+    ? [
+        { to: "/dashboard", label: "Dashboard" },
+        { to: "/upload", label: "Upload" },
+        { to: "/history", label: "History" },
+        { to: "/pricing", label: "Pricing" },
+      ]
+    : [
+        { to: "/", label: "Home" },
+        { to: "/pricing", label: "Pricing" },
+      ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
@@ -45,20 +60,31 @@ export function Header() {
             <button
               onClick={toggleDark}
               className="p-2 rounded-xl hover:bg-accent transition-colors text-muted-foreground"
+              aria-label="Toggle theme"
             >
               {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
-            <Link to="/login">
-              <Button variant="ghost" size="sm">Log in</Button>
-            </Link>
-            <Link to="/signup">
-              <Button variant="sage" size="sm">Get Started</Button>
-            </Link>
+            {user ? (
+              <>
+                <Link to="/profile">
+                  <Button variant="ghost" size="sm"><UserIcon className="w-4 h-4" /> Profile</Button>
+                </Link>
+                <Button variant="sage" size="sm" onClick={handleLogout}>
+                  <LogOut className="w-4 h-4" /> Log out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/login"><Button variant="ghost" size="sm">Log in</Button></Link>
+                <Link to="/signup"><Button variant="sage" size="sm">Get Started</Button></Link>
+              </>
+            )}
           </div>
 
           <button
             className="md:hidden p-2 text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -82,12 +108,14 @@ export function Header() {
             </Link>
           ))}
           <div className="flex gap-2 pt-3">
-            <Link to="/login" className="flex-1">
-              <Button variant="outline" size="sm" className="w-full">Log in</Button>
-            </Link>
-            <Link to="/signup" className="flex-1">
-              <Button variant="sage" size="sm" className="w-full">Get Started</Button>
-            </Link>
+            {user ? (
+              <Button variant="sage" size="sm" className="w-full" onClick={handleLogout}>Log out</Button>
+            ) : (
+              <>
+                <Link to="/login" className="flex-1"><Button variant="outline" size="sm" className="w-full">Log in</Button></Link>
+                <Link to="/signup" className="flex-1"><Button variant="sage" size="sm" className="w-full">Get Started</Button></Link>
+              </>
+            )}
           </div>
         </motion.div>
       )}

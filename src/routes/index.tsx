@@ -195,14 +195,14 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Why Choose Aura - Pricing Comparison */}
+      {/* Why Choose DataSage - Pricing Comparison */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <motion.div {...fadeUp}>
             <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Pricing</p>
-            <h2 className="font-heading text-4xl sm:text-5xl mb-3">Why Choose Aura?</h2>
+            <h2 className="font-heading text-4xl sm:text-5xl mb-3">Why Choose DataSage?</h2>
             <p className="text-muted-foreground max-w-lg mx-auto mb-4">
-              Compare features across plans and see why leading teams choose Aura.
+              Compare features across plans and see why leading teams choose DataSage.
             </p>
             <Link to="/pricing">
               <Button variant="outline" size="sm" className="rounded-full mb-10">
@@ -262,7 +262,7 @@ function LandingPage() {
             </motion.div>
             <motion.div {...fadeUp} className="lg:pl-8">
               <blockquote className="font-heading text-2xl sm:text-3xl leading-snug">
-                "I was skeptical, but Aura has completely transformed the way I manage my business. The data visualizations are so clear and intuitive."
+                "I was skeptical, but DataSage has completely transformed the way I manage my business. The data visualizations are so clear and intuitive."
               </blockquote>
               <p className="mt-4 text-sm text-muted-foreground">— Sarah Chen, VP of Analytics at TechCorp</p>
             </motion.div>

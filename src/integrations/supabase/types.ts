@@ -14,7 +14,123 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      datasets: {
+        Row: {
+          column_count: number
+          created_at: string
+          file_name: string
+          file_size: number
+          file_type: string | null
+          health_score: number
+          id: string
+          row_count: number
+          status: string
+          summary: string | null
+          user_id: string
+        }
+        Insert: {
+          column_count?: number
+          created_at?: string
+          file_name: string
+          file_size?: number
+          file_type?: string | null
+          health_score?: number
+          id?: string
+          row_count?: number
+          status?: string
+          summary?: string | null
+          user_id: string
+        }
+        Update: {
+          column_count?: number
+          created_at?: string
+          file_name?: string
+          file_size?: number
+          file_type?: string | null
+          health_score?: number
+          id?: string
+          row_count?: number
+          status?: string
+          summary?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          company: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          company?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          company?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          language: string
+          notifications: Json
+          theme: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          language?: string
+          notifications?: Json
+          theme?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          language?: string
+          notifications?: Json
+          theme?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

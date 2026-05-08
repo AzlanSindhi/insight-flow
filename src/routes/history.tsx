@@ -1,7 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
-import { Database, MoreHorizontal, Search, Filter } from "lucide-react";
+import { Database, Trash2, Search, Filter } from "lucide-react";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { format } from "date-fns";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/history")({
   component: HistoryPage,
@@ -13,16 +18,46 @@ export const Route = createFileRoute("/history")({
   }),
 });
 
-const datasets = [
-  { name: "sales_data_2024.csv", rows: "12,847", cols: 24, date: "May 4, 2026", health: 94, status: "Analyzed" },
-  { name: "customer_survey.xlsx", rows: "5,231", cols: 18, date: "May 3, 2026", health: 88, status: "Analyzed" },
-  { name: "marketing_spend.json", rows: "892", cols: 12, date: "May 1, 2026", health: 96, status: "Analyzed" },
-  { name: "inventory_q3.csv", rows: "34,102", cols: 31, date: "Apr 28, 2026", health: 72, status: "Processing" },
-  { name: "hr_data_2025.xlsx", rows: "2,450", cols: 15, date: "Apr 25, 2026", health: 91, status: "Analyzed" },
-  { name: "web_analytics.csv", rows: "156,203", cols: 42, date: "Apr 20, 2026", health: 85, status: "Analyzed" },
-];
+interface Row {
+  id: string;
+  file_name: string;
+  row_count: number;
+  column_count: number;
+  health_score: number;
+  status: string;
+  created_at: string;
+}
 
 function HistoryPage() {
+  const { user, loading } = useRequireAuth();
+  const [rows, setRows] = useState<Row[]>([]);
+  const [search, setSearch] = useState("");
+
+  const refresh = () => {
+    supabase
+      .from("datasets")
+      .select("id,file_name,row_count,column_count,health_score,status,created_at")
+      .order("created_at", { ascending: false })
+      .then(({ data }) => setRows(data || []));
+  };
+
+  useEffect(() => {
+    if (user) refresh();
+  }, [user]);
+
+  const onDelete = async (id: string) => {
+    const { error } = await supabase.from("datasets").delete().eq("id", id);
+    if (error) toast.error(error.message);
+    else {
+      toast.success("Dataset removed");
+      setRows((r) => r.filter((x) => x.id !== id));
+    }
+  };
+
+  if (loading || !user) return null;
+
+  const filtered = rows.filter((r) => r.file_name.toLowerCase().includes(search.toLowerCase()));
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -31,18 +66,20 @@ function HistoryPage() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <h1 className="font-heading text-3xl">Dataset History</h1>
-              <p className="text-sm text-muted-foreground mt-1">{datasets.length} datasets analyzed</p>
+              <p className="text-sm text-muted-foreground mt-1">{filtered.length} dataset{filtered.length === 1 ? "" : "s"}</p>
             </motion.div>
             <div className="flex gap-2">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <input
                   type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search datasets..."
                   className="bg-card border border-border rounded-xl pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 w-48"
                 />
               </div>
-              <button className="p-2 bg-card border border-border rounded-xl hover:bg-accent transition-colors">
+              <button className="p-2 bg-card border border-border rounded-xl hover:bg-accent transition-colors" aria-label="Filter">
                 <Filter className="w-4 h-4 text-muted-foreground" />
               </button>
             </div>
@@ -56,40 +93,31 @@ function HistoryPage() {
               <span>Health</span>
               <span>Status</span>
             </div>
-            {datasets.map((ds, i) => (
-              <motion.div
-                key={ds.name}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: i * 0.05 }}
-              >
-                <Link
-                  to="/analysis"
-                  className="grid grid-cols-6 items-center px-6 py-4 hover:bg-accent/20 transition-colors border-b border-border/20 last:border-0"
-                >
-                  <div className="col-span-2 flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-accent/50">
-                      <Database className="w-4 h-4 text-muted-foreground" />
-                    </div>
+            {filtered.length === 0 && (
+              <div className="px-6 py-12 text-center text-sm text-muted-foreground">
+                No datasets yet. <Link to="/upload" className="text-primary hover:underline">Upload one</Link> to get started.
+              </div>
+            )}
+            {filtered.map((ds, i) => (
+              <motion.div key={ds.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.04 }}>
+                <div className="grid grid-cols-6 items-center px-6 py-4 hover:bg-accent/20 transition-colors border-b border-border/20 last:border-0">
+                  <Link to="/analysis" className="col-span-2 flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-accent/50"><Database className="w-4 h-4 text-muted-foreground" /></div>
                     <div>
-                      <p className="text-sm font-medium">{ds.name}</p>
-                      <p className="text-xs text-muted-foreground">{ds.cols} columns</p>
+                      <p className="text-sm font-medium">{ds.file_name}</p>
+                      <p className="text-xs text-muted-foreground">{ds.column_count} columns</p>
                     </div>
-                  </div>
-                  <span className="text-sm">{ds.rows}</span>
-                  <span className="text-sm text-muted-foreground">{ds.date}</span>
-                  <span className={`text-sm font-medium ${ds.health >= 90 ? "text-sage" : ds.health >= 80 ? "text-warm" : "text-destructive"}`}>
-                    {ds.health}%
-                  </span>
+                  </Link>
+                  <span className="text-sm">{ds.row_count.toLocaleString()}</span>
+                  <span className="text-sm text-muted-foreground">{format(new Date(ds.created_at), "MMM d, yyyy")}</span>
+                  <span className={`text-sm font-medium ${ds.health_score >= 90 ? "text-sage" : ds.health_score >= 80 ? "text-warm" : "text-destructive"}`}>{ds.health_score}%</span>
                   <div className="flex items-center justify-between">
-                    <span className={`text-xs px-2.5 py-1 rounded-full ${ds.status === "Analyzed" ? "bg-sage/10 text-sage" : "bg-warm/10 text-warm"}`}>
-                      {ds.status}
-                    </span>
-                    <button className="p-1 hover:bg-accent rounded-lg transition-colors" onClick={(e) => e.preventDefault()}>
-                      <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
+                    <span className={`text-xs px-2.5 py-1 rounded-full ${ds.status === "Analyzed" ? "bg-sage/10 text-sage" : "bg-warm/10 text-warm"}`}>{ds.status}</span>
+                    <button className="p-1 hover:bg-destructive/10 rounded-lg transition-colors" onClick={() => onDelete(ds.id)} aria-label="Delete">
+                      <Trash2 className="w-4 h-4 text-muted-foreground hover:text-destructive" />
                     </button>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             ))}
           </div>

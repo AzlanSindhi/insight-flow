@@ -9,6 +9,7 @@ import { TrendChart, CorrelationScatter, ColumnTypeDistribution, FeatureImportan
 import { AIChatAssistant } from "@/components/AIChatAssistant";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { setActiveDatasetId } from "@/hooks/useActiveDataset";
 import { formatDistanceToNow } from "date-fns";
 
 export const Route = createFileRoute("/dashboard")({

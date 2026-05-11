@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Database, Trash2, Search, Filter } from "lucide-react";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { setActiveDatasetId } from "@/hooks/useActiveDataset";
 import { format } from "date-fns";
 import { toast } from "sonner";
 
@@ -101,11 +102,11 @@ function HistoryPage() {
             {filtered.map((ds, i) => (
               <motion.div key={ds.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.04 }}>
                 <div className="grid grid-cols-6 items-center px-6 py-4 hover:bg-accent/20 transition-colors border-b border-border/20 last:border-0">
-                  <Link to="/analysis" className="col-span-2 flex items-center gap-3">
+                  <Link to="/analysis" onClick={() => setActiveDatasetId(ds.id)} className="col-span-2 flex items-center gap-3">
                     <div className="p-2 rounded-lg bg-accent/50"><Database className="w-4 h-4 text-muted-foreground" /></div>
                     <div>
                       <p className="text-sm font-medium">{ds.file_name}</p>
-                      <p className="text-xs text-muted-foreground">{ds.column_count} columns</p>
+                      <p className="text-xs text-muted-foreground">{ds.column_count} columns · click to set active</p>
                     </div>
                   </Link>
                   <span className="text-sm">{ds.row_count.toLocaleString()}</span>

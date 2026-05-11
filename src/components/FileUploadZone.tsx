@@ -6,6 +6,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { parseFile } from "@/lib/parseFile";
+import { setActiveDatasetId } from "@/hooks/useActiveDataset";
 import { toast } from "sonner";
 
 const fileTypes = [
@@ -35,20 +36,27 @@ export function FileUploadZone() {
       setBusy(true);
       try {
         const parsed = await parseFile(file);
-        const { error } = await supabase.from("datasets").insert({
-          user_id: user.id,
-          file_name: file.name,
-          file_size: file.size,
-          file_type: parsed.fileType,
-          row_count: parsed.rowCount,
-          column_count: parsed.columnCount,
-          health_score: parsed.healthScore,
-          status: "Analyzed",
-          summary: parsed.summary,
-        });
+        const { data: inserted, error } = await supabase
+          .from("datasets")
+          .insert({
+            user_id: user.id,
+            file_name: file.name,
+            file_size: file.size,
+            file_type: parsed.fileType,
+            row_count: parsed.rowCount,
+            column_count: parsed.columnCount,
+            health_score: parsed.healthScore,
+            status: "Analyzed",
+            summary: parsed.summary,
+            schema: parsed.schema as any,
+            sample: parsed.sample as any,
+          })
+          .select("id")
+          .single();
         if (error) throw error;
+        if (inserted?.id) setActiveDatasetId(inserted.id);
         setUploaded(true);
-        toast.success(`${file.name} analyzed successfully`);
+        toast.success(`${file.name} analyzed — chat is now scoped to this dataset`);
         setTimeout(() => {
           navigate({ to: "/analysis" });
         }, 900);

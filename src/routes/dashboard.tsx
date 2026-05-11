@@ -131,7 +131,7 @@ function DashboardPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className={`text-xs px-2.5 py-1 rounded-full ${ds.status === "Analyzed" ? "bg-sage/10 text-sage" : "bg-warm/10 text-warm"}`}>{ds.status}</span>
-                    <Link to="/analysis" className="p-1 hover:bg-accent rounded-lg transition-colors">
+                    <Link to="/analysis" onClick={() => setActiveDatasetId(ds.id)} className="p-1 hover:bg-accent rounded-lg transition-colors">
                       <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
                     </Link>
                   </div>

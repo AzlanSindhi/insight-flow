@@ -60,7 +60,7 @@ function profileRows(rows: Record<string, unknown>[], headers: string[]): Column
     }
     let resolved: ColumnSchema["type"] = "empty";
     let topCount = 0;
-    for (const [t, c] of types) if (c > topCount) { topCount = c; resolved = t; }
+    for (const [t, c] of types) if (c > topCount) { topCount = c; resolved = t as ColumnSchema["type"]; }
     if (types.size > 1) {
       const total = Array.from(types.values()).reduce((a, b) => a + b, 0);
       if (topCount / total < 0.85) resolved = "mixed";

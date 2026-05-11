@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           content: string
           created_at: string
+          dataset_id: string | null
           id: string
           role: string
           user_id: string
@@ -25,6 +26,7 @@ export type Database = {
         Insert: {
           content: string
           created_at?: string
+          dataset_id?: string | null
           id?: string
           role: string
           user_id: string
@@ -32,6 +34,7 @@ export type Database = {
         Update: {
           content?: string
           created_at?: string
+          dataset_id?: string | null
           id?: string
           role?: string
           user_id?: string
@@ -48,6 +51,8 @@ export type Database = {
           health_score: number
           id: string
           row_count: number
+          sample: Json
+          schema: Json
           status: string
           summary: string | null
           user_id: string
@@ -61,6 +66,8 @@ export type Database = {
           health_score?: number
           id?: string
           row_count?: number
+          sample?: Json
+          schema?: Json
           status?: string
           summary?: string | null
           user_id: string
@@ -74,6 +81,8 @@ export type Database = {
           health_score?: number
           id?: string
           row_count?: number
+          sample?: Json
+          schema?: Json
           status?: string
           summary?: string | null
           user_id?: string

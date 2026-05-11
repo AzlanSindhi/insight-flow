@@ -52,6 +52,9 @@ function HistoryPage() {
     else {
       toast.success("Dataset removed");
       setRows((r) => r.filter((x) => x.id !== id));
+      if (typeof window !== "undefined" && localStorage.getItem("datasage.activeDatasetId") === id) {
+        setActiveDatasetId(null);
+      }
     }
   };
 

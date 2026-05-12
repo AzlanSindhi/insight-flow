@@ -45,46 +45,55 @@ export type Database = {
         Row: {
           column_count: number
           created_at: string
+          domain: string | null
           file_name: string
           file_size: number
           file_type: string | null
           health_score: number
           id: string
+          insights: Json
           row_count: number
           sample: Json
           schema: Json
           status: string
           summary: string | null
+          understanding: string | null
           user_id: string
         }
         Insert: {
           column_count?: number
           created_at?: string
+          domain?: string | null
           file_name: string
           file_size?: number
           file_type?: string | null
           health_score?: number
           id?: string
+          insights?: Json
           row_count?: number
           sample?: Json
           schema?: Json
           status?: string
           summary?: string | null
+          understanding?: string | null
           user_id: string
         }
         Update: {
           column_count?: number
           created_at?: string
+          domain?: string | null
           file_name?: string
           file_size?: number
           file_type?: string | null
           health_score?: number
           id?: string
+          insights?: Json
           row_count?: number
           sample?: Json
           schema?: Json
           status?: string
           summary?: string | null
+          understanding?: string | null
           user_id?: string
         }
         Relationships: []

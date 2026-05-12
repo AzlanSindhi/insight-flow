@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { parseFile } from "@/lib/parseFile";
 import { setActiveDatasetId } from "@/hooks/useActiveDataset";
+import { generateUnderstanding } from "@/lib/understanding.functions";
 import { toast } from "sonner";
 
 const fileTypes = [
@@ -50,13 +51,20 @@ export function FileUploadZone() {
             summary: parsed.summary,
             schema: parsed.schema as any,
             sample: parsed.sample as any,
+            domain: parsed.domain,
           })
           .select("id")
           .single();
         if (error) throw error;
-        if (inserted?.id) setActiveDatasetId(inserted.id);
+        if (inserted?.id) {
+          setActiveDatasetId(inserted.id);
+          // Fire-and-forget AI understanding report; analysis page will poll for it
+          generateUnderstanding({ data: { datasetId: inserted.id } }).catch((e) =>
+            console.error("understanding generation failed", e),
+          );
+        }
         setUploaded(true);
-        toast.success(`${file.name} analyzed — chat is now scoped to this dataset`);
+        toast.success(`${file.name} analyzed — generating insights…`);
         setTimeout(() => {
           navigate({ to: "/analysis" });
         }, 900);
